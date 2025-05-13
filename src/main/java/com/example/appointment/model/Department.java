@@ -1,26 +1,26 @@
 package com.example.appointment.model;
 
-import lombok.*;
+
 import jakarta.persistence.*;
+import lombok.*;
+
 @Entity
-@Table(name = "cities")
+@Table(name = "departments")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class City {
+public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cityId;
+    private Long departmentId;
 
-    private String cityName;
-
-    @ManyToOne
-    @JoinColumn(name = "state_id")
-    private State state;
+    @Column(nullable = false)
+    private String departmentName;
 
     @Override
     public String toString() {
-        return cityName;
+        return departmentName;
     }
 }
+

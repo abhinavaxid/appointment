@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Book Appointment</title>
+  </head>
+  <body>
+    <h2>Book Appointment</h2>
+
+    <form th:action="@{/appointments/book}" method="post">
+      <label>Registration ID:</label>
+      <input type="number" name="registrationId" required />
+
+      <br /><br />
+      <label>State:</label>
+      <select id="state" name="stateId" required>
+        <option value="">--Select State--</option>
+        <option
+          th:each="state : ${states}"
+          th:value="${state.stateId}"
+          th:text="${state.stateName}"
+        ></option>
+      </select>
+
+      <br /><br />
+
+      <label>City:</label>
+      <select id="city" name="cityId" required>
+        <option value="">--Select City--</option>
+      </select>
+
+      <br /><br />
+
+      <label>Hospital:</label>
+      <select id="hospital" name="hospitalId" required>
+        <option value="">--Select Hospital--</option>
+      </select>
+
+      <br /><br />
+
+      <label>Appointment Date:</label>
+      <input type="date" name="appointmentDate" required />
+
+      <br /><br />
+
+      <label>Time Slot:</label>
+      <select name="timeSlot" required>
+        <option value="">--Select Slot--</option>
+        <option
+          th:each="slot : ${timeSlots}"
+          th:value="${slot}"
+          th:text="${slot}"
+        ></option>
+      </select>
+
+      <br /><br />
+
+      <label>Department:</label>
+      <select id="department" name="departmentId" required>
+        <option value="">--Select Department--</option>
+        <option
+          th:each="dept : ${departments}"
+          th:value="${dept.departmentId}"
+          th:text="${dept.departmentName}"
+        ></option>
+      </select>
+
+      <br /><br />
+
+      <label>Doctor:</label>
+      <select id="doctor" name="doctorId" required>
+        <option value="">--Select Doctor--</option>
+      </select>
+
+      <br /><br />
+
+      <button type="submit">Book Appointment</button>
+    </form>
+    <script>
+      document.getElementById("state").addEventListener("change", function () {
+        const stateId = this.value;
+        fetch("/api/cities/" + stateId)
+          .then((res) => res.json())
+          .then((data) => {
+            const citySelect = document.getElementById("city");
+            citySelect.innerHTML = '<option value="">--Select City--</option>';
+            data.forEach((city) => {
+              citySelect.innerHTML += `<option value="${city.cityId}">${city.cityName}</option>`;
+            });
+          });
+      });
+
+      document.getElementById("city").addEventListener("change", function () {
+        const cityId = this.value;
+        fetch("/api/hospitals/" + cityId)
+          .then((res) => res.json())
+          .then((data) => {
+            const hospitalSelect = document.getElementById("hospital");
+            hospitalSelect.innerHTML =
+              '<option value="">--Select Hospital--</option>';
+            data.forEach((hospital) => {
+              hospitalSelect.innerHTML += `<option value="${hospital.hospitalId}">${hospital.hospitalName}</option>`;
+            });
+          });
+      });
+
+      document.getElementById("department").addEventListener("change", function () {
+    const deptId = this.value;
+    fetch("/api/doctors/" + deptId)
+        .then(res => res.json())
+        .then(data => {
+            const doctorSelect = document.getElementById("doctor");
+            doctorSelect.innerHTML = '<option value="">--Select Doctor--</option>';
+            data.forEach(doc => {
+                doctorSelect.innerHTML += `<option value="${doc.doctorId}">${doc.doctorName}</option>`;
+            });
+        });
+});
+
+    </script>
+  </body>
+</html>

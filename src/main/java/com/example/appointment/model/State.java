@@ -17,4 +17,9 @@ public class State {
 
     @OneToMany(mappedBy = "state")
     private List<City> cities;
+
+    @Override
+    public String toString() {
+        return stateName;
+    }
 }
