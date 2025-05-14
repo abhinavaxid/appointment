@@ -33,4 +33,27 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid registration ID"));
         return appointmentRepository.findByPatient(patient);
     }
+
+    @Override
+    public Appointment updateAppointmentDetails(Long appointmentId, String medications, String tests) {
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new IllegalArgumentException("Appointment not found: " + appointmentId));
+
+        appointment.setPrescribedMedications(medications);
+        appointment.setRecommendedTests(tests);
+
+        return appointmentRepository.save(appointment);
+    }
+
+    @Override
+    public List<Appointment> getAppointmentsByDoctor(com.example.appointment.model.Doctor doctor) {
+        return appointmentRepository.findByDoctor(doctor);
+    }
+
+    @Override
+    public Appointment getAppointmentById(Long id) {
+        return appointmentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Appointment not found: " + id));
+    }
+
 }

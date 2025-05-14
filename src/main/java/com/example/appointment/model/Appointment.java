@@ -44,6 +44,10 @@ public class Appointment {
     @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
 
-    
+    @Column(columnDefinition = "TEXT")
+    private String prescribedMedications;
+
+    @Column(columnDefinition = "TEXT")
+    private String recommendedTests;
 
 }

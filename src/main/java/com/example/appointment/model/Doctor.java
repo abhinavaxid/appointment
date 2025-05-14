@@ -28,6 +28,9 @@ public class Doctor {
     @JoinColumn(name = "hospital_id", nullable = false)
     private Hospital hospital;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Override
     public String toString() {

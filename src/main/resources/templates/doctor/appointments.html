@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Appointments</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5"> 
+        <a class="nav-link" href="/doctor/dashboard">Back to Dashboard</a>
+    </div>
+<div class="container mt-5">
+    <h2 class="mb-4">My Appointments</h2>
+
+    <div th:if="${appointments.isEmpty()}">
+        <div class="alert alert-info">No appointments found.</div>
+    </div>
+
+    <table class="table table-bordered table-striped" th:if="${!appointments.isEmpty()}">
+        <thead class="table-dark">
+        <tr>
+            <th>Patient Name</th>
+            <th>DOB</th>
+            <th>Gender</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Appointment Date</th>
+            <th>Time Slot</th>
+            <th>Medications</th>
+            <th>Tests</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="appointment : ${appointments}">
+            <td th:text="${appointment.patient.patientName}"></td>
+            <td th:text="${#temporals.format(appointment.patient.dob, 'dd-MM-yyyy')}"></td>
+            <td th:text="${appointment.patient.gender}"></td>
+            <td th:text="${appointment.city.cityName}"></td>
+            <td th:text="${appointment.state.stateName}"></td>
+            <td th:text="${#temporals.format(appointment.appointmentDate, 'dd-MM-yyyy')}"></td>
+            <td th:text="${appointment.timeSlot}"></td>
+            <td th:text="${appointment.prescribedMedications != null ? appointment.prescribedMedications : 'N/A'}"></td>
+            <td th:text="${appointment.recommendedTests != null ? appointment.recommendedTests : 'N/A'}"></td>
+            <td>
+                <a th:href="@{'/doctor/appointments/' + ${appointment.appointmentId} + '/edit'}" class="btn btn-sm btn-primary">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
