@@ -1,5 +1,6 @@
 package com.example.appointment.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -22,6 +23,7 @@ public class Hospital {
 
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false)
+    @JsonIgnore 
     private City city;
 
     @Override
