@@ -1,5 +1,7 @@
 package com.example.appointment.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,5 +26,6 @@ public class User {
     private String role; // e.g., "DOCTOR", "ADMIN"
 
     @OneToOne(mappedBy = "user")
+    @JsonManagedReference
     private Doctor doctor;
 }

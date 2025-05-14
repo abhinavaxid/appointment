@@ -20,21 +20,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/", "/register", "/book-appointment", "/css/**", "/js/**").permitAll()
-                .requestMatchers("/doctor/**").hasRole("DOCTOR")
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .defaultSuccessUrl("/doctor/dashboard", true)
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutSuccessUrl("/login?logout")
-                .permitAll()
-            )
-            .userDetailsService(customUserDetailsService);
+        .csrf(csrf -> csrf.disable())
+
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login", "/", "/register", "/appointments/book","/appointments/success", "/css/**", "/js/**",
+                                "/*.jpg", "/api/cities/**", // 👈 allow AJAX endpoint
+                                "/api/hospitals/**", // 👈 and any other API used by frontend JS
+                                "/api/departments/**",
+                                "/api/doctors/**")
+                        .permitAll()
+                        .requestMatchers("/doctor/**").hasRole("DOCTOR")
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/doctor/dashboard", true)
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll())
+                .userDetailsService(customUserDetailsService);
 
         return http.build();
     }

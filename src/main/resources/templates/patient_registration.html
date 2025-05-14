@@ -65,27 +65,31 @@
             const stateId = $(this).val();
             if (stateId) {
                 $.ajax({
-                    url: '/cities',
+                    url: '/api/cities/' + stateId, // ✅ match your REST endpoint
                     type: 'GET',
-                    data: { stateId: stateId },
                     success: function (cities) {
                         let citySelect = $('#citySelect');
                         citySelect.empty().append('<option value="" disabled selected>Select City</option>');
                         $.each(cities, function (index, city) {
-                            citySelect.append($('<option>', {
-                                value: city.cityId,
-                                text: city.cityName
-                            }));
+                            citySelect.append(
+                                $('<option>', {
+                                    value: city.cityId,
+                                    text: city.cityName
+                                })
+                            );
                         });
                     },
                     error: function () {
                         alert('Error fetching cities!');
                     }
                 });
+            } else {
+                $('#citySelect').empty().append('<option value="" disabled selected>Select City</option>');
             }
         });
     });
 </script>
+
 
 </body>
 </html>

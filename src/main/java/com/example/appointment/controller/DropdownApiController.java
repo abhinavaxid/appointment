@@ -37,6 +37,7 @@ public List<Hospital> getHospitalsByCity(@PathVariable Long cityId) {
 
 @GetMapping("/doctors/{departmentId}")
 public List<Doctor> getDoctorsByDepartment(@PathVariable Long departmentId) {
+    System.out.println("Loading doctors for department: " + departmentId);
     return doctorRepository.findByDepartment_DepartmentId(departmentId);
 }
 }
