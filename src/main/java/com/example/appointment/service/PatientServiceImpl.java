@@ -24,9 +24,9 @@ public class PatientServiceImpl implements PatientService {
     private final CityRepository cityRepository;
 
     @Override
-    public void savePatient(PatientRegistration patient) {
+    public PatientRegistration savePatient(PatientRegistration patient) {
         patient.setRegistrationDate(LocalDate.now());
-        patientRepository.save(patient);
+        return patientRepository.save(patient); // Return saved object with ID
     }
 
     @Override

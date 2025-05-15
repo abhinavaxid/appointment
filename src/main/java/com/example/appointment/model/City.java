@@ -1,5 +1,5 @@
 package com.example.appointment.model;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import jakarta.persistence.*;
 @Entity
@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"state"}) // Prevent Jackson from recursively accessing State
 public class City {
 
     @Id

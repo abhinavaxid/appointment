@@ -112,8 +112,10 @@
 
     <!-- Success Message -->
     <div th:if="${param.success}" class="alert alert-success" role="alert">
-        Patient registered successfully!
-    </div>
+    Patient registered successfully! <br/>
+    Your Registration ID is <strong th:text="${param.registrationId}"></strong>. 
+    Use this ID to book your appointment.
+</div>
 
     <form th:action="@{/register}" th:object="${patient}" method="post" class="row g-3">
 

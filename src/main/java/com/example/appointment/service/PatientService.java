@@ -7,7 +7,7 @@ import com.example.appointment.model.PatientRegistration;
 import com.example.appointment.model.State;
 
 public interface PatientService {
-    void savePatient(PatientRegistration patient);
+    PatientRegistration savePatient(PatientRegistration patient);
     List<State> getAllStates();
     List<City> getCitiesByState(Long stateId);
 }

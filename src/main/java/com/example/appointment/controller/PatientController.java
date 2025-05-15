@@ -31,8 +31,8 @@ public class PatientController {
 
     @PostMapping("/register")
     public String registerPatient(@ModelAttribute PatientRegistration patient) {
-        patientService.savePatient(patient);
-        return "redirect:/register?success";
+        PatientRegistration savedPatient = patientService.savePatient(patient);
+        return "redirect:/register?success=true&registrationId=" + savedPatient.getRegistrationId();
     }
 
     @ResponseBody

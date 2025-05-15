@@ -47,7 +47,8 @@ public String bookAppointment(@RequestParam("registrationId") Long registrationI
                               @RequestParam("appointmentDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate appointmentDate,
                               @RequestParam("timeSlot") String timeSlot,
                               @RequestParam("departmentId") Long departmentId,
-                              @RequestParam("doctorId") Long doctorId) {
+                              @RequestParam("doctorId") Long doctorId,
+                              Model model) {
 
     // Validate patient
     PatientRegistration patient = patientRepository.findById(registrationId)
@@ -71,9 +72,11 @@ public String bookAppointment(@RequestParam("registrationId") Long registrationI
     appointment.setDepartment(department);
     appointment.setDoctor(doctor);
 
-    appointmentService.bookAppointment(appointment);
+    Appointment savedAppointment = appointmentService.bookAppointment(appointment);
 
-    return "redirect:/appointments/success";
+    // Pass data to view
+    model.addAttribute("appointment", savedAppointment);
+    return "appointment_success"; // NOT a redirect
 }
 
 

@@ -1,6 +1,5 @@
 package com.example.appointment.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -11,7 +10,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"city"}) 
+@JsonIgnoreProperties({"city"}) // Avoid deep recursion into City
 public class Hospital {
 
     @Id
@@ -23,7 +22,6 @@ public class Hospital {
 
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false)
-    @JsonIgnore 
     private City city;
 
     @Override
@@ -31,4 +29,5 @@ public class Hospital {
         return hospitalName;
     }
 }
+
 
